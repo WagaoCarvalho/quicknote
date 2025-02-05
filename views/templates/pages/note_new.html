@@ -1,6 +1,28 @@
-{{ define "title" }}Nova anotação{{ end }}
+{{ define "title" }}
+Nova anotação
+{{ end }}
 
 {{ define "main" }}
-<h3>Nova anotação</h3>
-<p>Formulário</p>
+<h1>Nova anotação</h1>
+<form action="/note/save" class="user-form" method="post">
+    <label for="title">Título</label>
+    <input type="text" name="title" id="title">
+
+    <label for="title">Conteúdo</label>
+    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+
+    <label for="color">Cor do cartão</label>
+    <input id="color" type="hidden" name="color" value="{{.Color}}">
+    <div class="color-picker">
+        {{ $color := .Color }}
+        {{ range .Colors }}
+        <div data-color="{{ . }}" class="color {{ . }} {{ if eq . $color }} active {{ end }}"></div>
+        {{ end }}
+    </div>
+
+    <div class="buttons">
+        <button type="submit" class="success">Salvar</button>
+        <button class="neutral" type="button">Cancelar</button>
+    </div>
+</form>
 {{ end }}

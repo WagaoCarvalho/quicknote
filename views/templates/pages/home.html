@@ -1,6 +1,21 @@
-{{ define "title" }}Home Page{{ end }}
+{{ define "title" }} Home Page {{ end }}
 
 {{ define "main" }}
-<h3>Últimas anotações</h3>
-<p>Sem anotações...</p>
+
+{{ if eq (len .) 0 }}
+<h3>Sem anotações...</h3>
+{{ end }}
+
+<div class="notes-container">
+{{ range . }}
+    <div id="{{.Id}}" class="note {{ .Color }}">
+        <p class="title">{{ .Title }}</p>
+        <div class="content">{{ .Content }}</div>
+        <div class="footer">
+            <a data-noteid="{{.Id}}" href="#">Deletar</a>
+        </div>
+    </div>
+{{ end }}
+</div>
+
 {{ end }}
