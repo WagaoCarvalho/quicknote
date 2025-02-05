@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: seu_usuario      # Define o nome de usuário
+      POSTGRES_PASSWORD: sua_senha    # Define a senha do usuário
+      POSTGRES_DB: seu_banco_de_dados # Define o nome do banco de dados
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+ 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+ 
+volumes:
+  pgdata:

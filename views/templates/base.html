@@ -1,0 +1,39 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">    
+    <title>{{ template "title" . }} - Quicknotes</title>
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <h1><a href="/">Quicknotes</a></h1>
+        </div>
+        <nav>
+            <div class="wrapper">
+                <a href="/">Home</a>
+                <a href="/note/new">Adicionar Anotação</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="wrapper">
+            {{ template "main" . }}
+        </div>
+    </main>
+    <footer>
+        <div class="wrapper">
+            &copy;2025 por Wagner Carvalho. Todos os direitos reservados.
+        </div>
+    </footer>
+    <script type="module" src="../static/js/initialize-note-events.js"></script>
+</body>
+</html>
+{{ end }}
