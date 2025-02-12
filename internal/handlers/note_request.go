@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/WagaoCarvalho/quicknote/internal/models"
+	"github.com/WagaoCarvalho/quicknote/internal/validations"
 )
 
 // NoteRequest representa os dados necessários para a renderização da página de edição de notas
@@ -13,6 +14,7 @@ type NoteRequest struct {
 	Content string
 	Color   string
 	Colors  []string
+	validations.FormValidator
 }
 
 // newNoteRequest inicializa uma NoteRequest com base em uma nota existente

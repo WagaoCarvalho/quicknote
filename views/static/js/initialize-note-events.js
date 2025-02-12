@@ -3,23 +3,21 @@ import { setupNeutralButtonEvent } from './setup-neutral-button-event.js';
 import { setupRedirectToNoteView } from './redirect-to-note-view.js';
 import { deleteNote } from './delete-note.js';
 import { editNote } from './edit-note.js';
+import { togglePasswordVisibility } from './toggle-password-visibility.js';
+import { hideSuccessMessage } from './hide_success_message.js';
 
-function initializeNoteEvents() {
+function initializeEvents() {
     setupColorCardEvents();
     setupNeutralButtonEvent();
     setupRedirectToNoteView();
     editNote();
-
-    // Deleta pelo batão dentro da nota
+    togglePasswordVisibility();
+    hideSuccessMessage();
+    
     document.querySelectorAll(".delete-button").forEach(button => {
         button.addEventListener("click", deleteNote);
-    });
-
-    // Deleta pelo link da nota na homepage
-    document.querySelectorAll(".note a").forEach(link => {
-        link.addEventListener("click", deleteNote); // Passa a referência da função
     });
     
 }
 
-document.addEventListener("DOMContentLoaded", initializeNoteEvents);
+document.addEventListener("DOMContentLoaded", initializeEvents);

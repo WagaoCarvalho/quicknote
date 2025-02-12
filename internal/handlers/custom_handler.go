@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/WagaoCarvalho/quicknote/internal/handlers/apperror"
+	"github.com/WagaoCarvalho/quicknote/internal/apperror"
 )
 
 var ErrNotFound = apperror.WithStatus(errors.New("não encontrado"), http.StatusNotFound)

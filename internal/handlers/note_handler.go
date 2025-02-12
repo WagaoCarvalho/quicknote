@@ -69,14 +69,6 @@ func (nh *noteHandler) NoteNew(w http.ResponseWriter, r *http.Request) error {
 }
 
 func (nh *noteHandler) NoteSave(w http.ResponseWriter, r *http.Request) error {
-	if r.Method != http.MethodPost {
-
-		w.Header().Set("Allow", http.MethodPost)
-
-		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
-		return nil
-	}
-
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, "Erro ao processar o formulário", http.StatusBadRequest)

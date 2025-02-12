@@ -199,6 +199,7 @@
     /* fim */
 
     /* estilização de formulários */
+    
     form .buttons {
         display: flex;
         justify-content: flex-end;
@@ -219,6 +220,45 @@
         color: var(--danger);
         list-style-position: inside;
     }
+
+    .password-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    height: 40px; /* Ajuste de altura para ficar consistente com o input de e-mail */
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px; /* Espaço para o botão */
+    box-sizing: border-box; /* Inclui o padding no tamanho total */
+}
+
+.password-container button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Tamanho adequado para o ícone */
+    outline: none;
+    padding: 5px; /* Ajusta o tamanho do botão para ser pequeno */
+    width: 40px; /* Largura fixa do botão */
+    height: 40px; /* Tamanho fixo do botão */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* Deixa o botão arredondado */
+    background-color: #f0f0f0; /* Fundo claro */
+}
+
+.password-container button:hover {
+    background-color: #ddd; /* Fundo mais escuro ao passar o mouse */
+}
+
     
     input[type=text], 
     input[type=password], 

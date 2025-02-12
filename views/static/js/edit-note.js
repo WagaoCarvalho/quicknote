@@ -1,14 +1,21 @@
 export function editNote() {
-    // Configura o evento de clique para alterar a cor da nota
+    // Seleciona todos os elementos de cor
     const colorElements = document.querySelectorAll(".color");
+
+    // Adiciona um evento de clique a cada cor
     colorElements.forEach(colorElement => {
         colorElement.addEventListener("click", () => {
+            // Remove a classe 'active' de todas as cores
             colorElements.forEach(el => el.classList.remove("active"));
+
+            // Adiciona a classe 'active' ao item clicado
             colorElement.classList.add("active");
 
+            // Atualiza o valor do input oculto
             const colorInput = document.querySelector("#color");
             if (colorInput) {
                 colorInput.value = colorElement.dataset.color;
+                console.log("Cor selecionada:", colorInput.value); // Debug
             }
         });
     });
