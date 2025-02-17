@@ -5,11 +5,11 @@ import (
 	"time"
 )
 
-type User struct {
+type UserConfirmationToken struct {
 	Id        int
-	Email     string
-	Password  string
-	Active    bool
+	UserId    int
+	Token     int
+	Confirmed bool
 	CreatedAt time.Time
 	UpdatedAt sql.NullTime
 }

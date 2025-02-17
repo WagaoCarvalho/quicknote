@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/WagaoCarvalho/quicknote/internal/handlers"
-	"github.com/WagaoCarvalho/quicknote/internal/repositories"
+	"github.com/WagaoCarvalho/quicknote/repositories"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -36,10 +36,10 @@ func main() {
 	mux.Handle("GET /static/", http.StripPrefix("/static/", staticHandler))
 
 	noteRepository := repositories.NewNoteRepository(dbpool)
-	//userRepository := repositories.NewUserRepository(dbpool)
+	userRepository := repositories.NewUserRepository(dbpool)
 
 	noteHandler := handlers.NewNoteHandler(noteRepository)
-	userHandler := handlers.NewUserHandler(nil)
+	userHandler := handlers.NewUserHandler(userRepository)
 
 	mux.HandleFunc("/", noteHandler.NotesList)
 

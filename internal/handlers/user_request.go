@@ -11,9 +11,9 @@ type UserRequest struct {
 	validations.FormValidator
 }
 
-func (req *UserRequest) newUserRequest(email, password string) {
-
-	req.Email = email
-	req.Password = password
-
+func newUserRequest(email, password string) *UserRequest {
+	return &UserRequest{
+		Email:    email,
+		Password: password,
+	}
 }

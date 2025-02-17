@@ -4,16 +4,18 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/WagaoCarvalho/quicknote/internal/repositories"
+	"github.com/WagaoCarvalho/quicknote/repositories"
+	"github.com/WagaoCarvalho/quicknote/utils"
 )
 
 type userHandler struct {
-	//	userRepository repositories.UserRepository
+	userRepository repositories.UserRepository
+	passwordHasher utils.BcryptHasher
 }
 
 func NewUserHandler(userRepository repositories.UserRepository) *userHandler {
 	return &userHandler{
-		//userRepository: userRepository,
+		userRepository: userRepository,
 	}
 }
 
@@ -32,31 +34,50 @@ func (uh *userHandler) Signup(w http.ResponseWriter, r *http.Request) error {
 	email := r.PostFormValue("email")
 	password := r.PostFormValue("password")
 
-	userRequest := &UserRequest{
-		Email:    email,    // Mantém o valor digitado
-		Password: password, // Mantém o valor digitado
-	}
+	userRequest := newUserRequest(email, password)
 
-	if email == "" {
+	if userRequest.Email == "" {
 		userRequest.AddFieldError("email", "O e-mail é obrigatório")
-	} else if !userRequest.IsEmailValid(email) {
+	} else if !userRequest.IsEmailValid(userRequest.Email) {
 		userRequest.AddFieldError("email", "O e-mail informado não é válido")
 	}
 
-	if password == "" {
+	if userRequest.Password == "" {
 		userRequest.AddFieldError("password", "A senha é obrigatória")
-	} else if len(password) < 6 {
+	} else if len(userRequest.Password) < 6 {
 		userRequest.AddFieldError("password", "A senha deve ter pelo menos 6 caracteres")
 	}
 
-	// Se houver erros, renderiza novamente o formulário com os valores preenchidos
 	if !userRequest.Valid() {
 		render(w, http.StatusUnprocessableEntity, "user_signup.html", userRequest)
 		return nil
 	}
 
-	fmt.Println(email, password)
+	//hash
+	// Injetando a implementação real
 
-	render(w, http.StatusOK, "user_signup.html", nil)
+	hashedPassword, err := uh.passwordHasher.HashPassword(userRequest.Password)
+	if err != nil {
+		http.Error(w, "Erro ao gerar hash da senha", http.StatusInternalServerError)
+		return nil
+	}
+	fmt.Println(hashedPassword)
+
+	user, err := uh.userRepository.CreateUser(r.Context(), userRequest.Email, hashedPassword)
+
+	if err == repositories.ErrDuplicateEmail {
+		userRequest.AddFieldError("email", "O email Já está em uso")
+		render(w, http.StatusUnprocessableEntity, "user_signup.html", userRequest)
+		return nil
+	}
+
+	if err != nil {
+		http.Error(w, "Erro ao criar o usuário", http.StatusInternalServerError)
+		return nil
+	}
+
+	fmt.Println("Usuário Criado com sucesso!! Id: ", user.Id)
+
+	render(w, http.StatusOK, "user_signup_success.html", nil)
 	return nil
 }

@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/WagaoCarvalho/quicknote/internal/models"
-	"github.com/WagaoCarvalho/quicknote/internal/repositories"
+	"github.com/WagaoCarvalho/quicknote/repositories"
 )
 
 type noteHandler struct {
@@ -27,6 +27,7 @@ func (nh *noteHandler) NotesList(w http.ResponseWriter, r *http.Request) {
 	// Recupera a lista de notas do repositório
 	notes, err := nh.noteRepository.ListNotes(r.Context())
 	if err != nil {
+		fmt.Println("Erro ao listar notas:", err) // Depuração
 		http.Error(w, "Aconteceu um erro ao acessar esta página", http.StatusInternalServerError)
 		return
 	}
